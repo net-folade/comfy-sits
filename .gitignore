@@ -13,6 +13,7 @@ dist-ssr
 .test-dist
 *.local
 .vercel
+BUILD_PLAN.md
 
 # Editor directories and files
 .vscode/*
