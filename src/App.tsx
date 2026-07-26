@@ -30,7 +30,6 @@ function App() {
     showToast(`${name} added to cart`)
   }
 
-  void addToCart
   void drawerOpen
   void setDrawerOpen
   void toast
@@ -41,7 +40,7 @@ function App() {
       <Header count={cart.count} onOpenCart={openCart} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/showroom" element={<Showroom />} />
+        <Route path="/showroom" element={<Showroom onAdd={addToCart} />} />
       </Routes>
       <Footer onOpenCart={openCart} />
     </BrowserRouter>

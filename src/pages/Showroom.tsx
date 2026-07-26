@@ -1,7 +1,12 @@
 import { useSearchParams } from 'react-router-dom'
-import { CATEGORIES, type CategoryFilter } from '../data/products'
+import { ProductCard } from '../components/ProductCard'
+import { CATEGORIES, PRODUCTS, type CategoryFilter } from '../data/products'
 
-export function Showroom() {
+interface ShowroomProps {
+  onAdd: (id: string, name: string) => void
+}
+
+export function Showroom({ onAdd }: ShowroomProps) {
   const [searchParams, setSearchParams] = useSearchParams()
   const raw = searchParams.get('cat')
   const filter: CategoryFilter = CATEGORIES.includes(raw as CategoryFilter)
@@ -11,6 +16,8 @@ export function Showroom() {
   const pick = (c: CategoryFilter) => {
     setSearchParams(c === 'All' ? {} : { cat: c })
   }
+
+  const shown = filter === 'All' ? PRODUCTS : PRODUCTS.filter((p) => p.cat === filter)
 
   return (
     <main className="showroom">
@@ -35,6 +42,12 @@ export function Showroom() {
           >
             {c}
           </button>
+        ))}
+      </div>
+
+      <div className="product-grid">
+        {shown.map((p) => (
+          <ProductCard key={p.id} product={p} onAdd={onAdd} />
         ))}
       </div>
     </main>
