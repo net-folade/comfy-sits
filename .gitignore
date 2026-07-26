@@ -25,3 +25,4 @@ BUILD_PLAN.md
 *.njsproj
 *.sln
 *.sw?
+/design
