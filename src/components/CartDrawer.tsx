@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PRODUCTS } from '../data/products'
 import { cartEntries, type Cart } from '../lib/cart'
@@ -18,6 +19,55 @@ interface CartDrawerProps {
 
 export function CartDrawer({ open, cart, subtotal, onClose, onInc, onDec, onRemove }: CartDrawerProps) {
   const navigate = useNavigate()
+  const drawerRef = useRef<HTMLElement>(null)
+
+  // Body scroll lock while the drawer is open.
+  useEffect(() => {
+    if (!open) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [open])
+
+  // Escape closes; Tab is trapped inside the drawer while open.
+  useEffect(() => {
+    if (!open) return
+    const drawer = drawerRef.current
+    const focusables = () =>
+      Array.from(
+        drawer?.querySelectorAll<HTMLElement>('button, a[href]') ?? []
+      ).filter((el) => el.offsetParent !== null)
+
+    const previouslyFocused = document.activeElement as HTMLElement | null
+    focusables()[0]?.focus()
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+      if (e.key !== 'Tab') return
+      const els = focusables()
+      if (els.length === 0) return
+      const first = els[0]
+      const last = els[els.length - 1]
+      const active = document.activeElement
+      if (e.shiftKey && (active === first || !drawer?.contains(active))) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && (active === last || !drawer?.contains(active))) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      previouslyFocused?.focus()
+    }
+  }, [open, onClose])
 
   // Resolve ids through the catalog and drop misses — a stale cart entry
   // for a deleted product must not crash the drawer.
@@ -37,6 +87,7 @@ export function CartDrawer({ open, cart, subtotal, onClose, onInc, onDec, onRemo
     <>
       {open && <div className="drawer-overlay" onClick={onClose} aria-hidden="true" />}
       <aside
+        ref={drawerRef}
         className={`cart-drawer ${open ? 'cart-drawer--open' : ''}`}
         aria-hidden={!open}
         aria-label="Shopping cart"
