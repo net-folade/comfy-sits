@@ -2,7 +2,7 @@ import { test } from 'node:test'
 import { strict as assert } from 'node:assert'
 import { cedi } from '../src/lib/format'
 import { buildCartMessage, cartLink } from '../src/lib/whatsapp'
-import { decItem } from '../src/lib/cart'
+import { cartCount, cartSubtotal, decItem } from '../src/lib/cart'
 
 test('cedi formats with GH₵ prefix and thousands separators', () => {
   assert.equal(cedi(620), 'GH₵ 620')
@@ -33,6 +33,13 @@ test('cartLink targets the configured number with an encoded message', () => {
   assert.ok(href.startsWith('https://wa.me/233123456789?text='))
   const decoded = decodeURIComponent(href.split('?text=')[1])
   assert.ok(decoded.includes('• 1× Osu Dining Chair — GH₵ 620'))
+})
+
+test('subtotal and count match the verification scenario', () => {
+  // 2× Osu Dining Chair (620) + 1× Volta Coffee Table (1650) = 2890, badge 3
+  const cart = { 'osu-dining-chair': 2, 'volta-coffee': 1 }
+  assert.equal(cartSubtotal(cart), 2890)
+  assert.equal(cartCount(cart), 3)
 })
 
 test('decItem removes the item when qty reaches zero', () => {
