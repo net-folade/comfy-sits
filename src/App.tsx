@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useCart } from './hooks/useCart'
+import { CartDrawer } from './components/CartDrawer'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { ScrollToTop } from './components/ScrollToTop'
@@ -30,8 +31,6 @@ function App() {
     showToast(`${name} added to cart`)
   }
 
-  void drawerOpen
-  void setDrawerOpen
   void toast
 
   return (
@@ -43,6 +42,15 @@ function App() {
         <Route path="/showroom" element={<Showroom onAdd={addToCart} />} />
       </Routes>
       <Footer onOpenCart={openCart} />
+      <CartDrawer
+        open={drawerOpen}
+        cart={cart.cart}
+        subtotal={cart.subtotal}
+        onClose={() => setDrawerOpen(false)}
+        onInc={cart.inc}
+        onDec={cart.dec}
+        onRemove={cart.remove}
+      />
     </BrowserRouter>
   )
 }
