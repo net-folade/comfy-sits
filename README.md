@@ -1,20 +1,11 @@
 # Comfy Sits — Showroom
 
-Mobile-first showroom site for Comfy Sits, a handcrafted furniture business in Accra, Ghana. Customers browse the catalog, build a cart, and tap **"Send order on WhatsApp"** — the order is finalised in the WhatsApp conversation. No payments happen on-site; the site is fully static (React + Vite, no backend).
+Mobile-first showroom site for Comfy Sits, a handcrafted furniture business in Accra, Ghana. Customers browse the catalog, build a cart, and tap **"Send order on WhatsApp"** — the order is finalised in the WhatsApp conversation. No payments happen on-site; the site is fully static (React + Vite).
 
 The original design mockup lives in `design/` and is the visual reference.
 
-## Develop
 
-```sh
-npm install
-npm run dev       # local dev server
-npm test          # unit tests (formatter, cart message, decrement)
-npm run build     # type-check + production build into dist/
-npm run preview   # serve the production build locally
-```
-
-## Editing content (no code knowledge needed beyond the file)
+## Editing content 
 
 | What | Where |
 |---|---|
