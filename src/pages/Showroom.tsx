@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { ProductCard } from '../components/ProductCard'
 import { CATEGORIES, PRODUCTS, type CategoryFilter } from '../data/products'
@@ -7,6 +8,10 @@ interface ShowroomProps {
 }
 
 export function Showroom({ onAdd }: ShowroomProps) {
+  useEffect(() => {
+    document.title = 'The Showroom — Comfy Sits'
+  }, [])
+
   const [searchParams, setSearchParams] = useSearchParams()
   const raw = searchParams.get('cat')
   const filter: CategoryFilter = CATEGORIES.includes(raw as CategoryFilter)

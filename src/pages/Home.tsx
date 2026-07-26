@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FaqAccordion } from '../components/FaqAccordion'
 import { DeliveryIcon, ExchangeIcon, MadeToOrderIcon } from '../components/OfferIcons'
@@ -28,6 +29,10 @@ const HOME_CATEGORIES = [
 ]
 
 export function Home() {
+  useEffect(() => {
+    document.title = 'Comfy Sits — Handcrafted Furniture in Accra'
+  }, [])
+
   return (
     <main>
       <section className="hero">
