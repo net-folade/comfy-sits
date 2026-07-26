@@ -20,6 +20,10 @@
 
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Karla', -apple-system, sans-serif;
+
+  /* Motion: --ease-out for entrances/lifts, --ease-spring for playful accents */
+  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 *,
@@ -86,6 +90,7 @@ img {
   *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
   }
 }
 
@@ -193,21 +198,39 @@ img {
   }
 
   .site-nav__link {
-    padding: 6px 2px;
+    position: relative;
+    padding: 6px 2px 8px;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.05em;
     color: #b9a78c;
-    border-bottom: 2px solid transparent;
+    transition: color 0.25s ease;
+  }
+
+  .site-nav__link::after {
+    content: '';
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    bottom: 0;
+    height: 2px;
+    background: var(--brass);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease-out);
   }
 
   .site-nav__link:hover {
     color: var(--cream);
   }
 
+  .site-nav__link:hover::after,
+  .site-nav__link.active::after {
+    transform: scaleX(1);
+  }
+
   .site-nav__link.active {
     color: var(--cream);
-    border-bottom-color: var(--brass);
   }
 
   .cart-pill {
@@ -233,10 +256,10 @@ img {
 }
 
 .hero__backdrop {
-  /* Photo slot: swap for a background-image when a real interior shot exists. */
   position: absolute;
   inset: 0;
-  background: linear-gradient(150deg, var(--espresso) 0%, var(--brass-deep) 100%);
+  background: url('/hero-bg.jpg') center / cover no-repeat,
+    linear-gradient(150deg, var(--espresso) 0%, var(--brass-deep) 100%);
 }
 
 .hero__scrim {
@@ -504,6 +527,177 @@ img {
     bottom: 24px;
     gap: 12px;
   }
+}
+
+/* ---------- Home motion: entrance cascade + micro-interactions ---------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.07) translateY(-1.5%);
+  }
+}
+
+/* Entrance: hero image settles while content cascades in, then the
+   backdrop drifts in a slow ambient zoom. Runs once per Home mount. */
+.hero__backdrop {
+  animation:
+    settle 2.2s var(--ease-out) both,
+    kenburns 26s ease-in-out 2.2s infinite alternate;
+}
+
+.hero__eyebrow {
+  animation: rise 1s var(--ease-out) 0.05s both;
+}
+
+.hero__title {
+  animation: rise 1s var(--ease-out) 0.18s both;
+}
+
+.hero__lead {
+  animation: rise 1s var(--ease-out) 0.32s both;
+}
+
+.hero__cta {
+  animation: rise 1s var(--ease-out) 0.46s both;
+}
+
+.offers .section-title {
+  animation: rise 1s var(--ease-out) 0.55s both;
+}
+
+.offers .section-lead {
+  animation: rise 1s var(--ease-out) 0.62s both;
+}
+
+.offer-card:nth-child(1) {
+  animation: rise 1s var(--ease-out) 0.7s both;
+}
+
+.offer-card:nth-child(2) {
+  animation: rise 1s var(--ease-out) 0.82s both;
+}
+
+.offer-card:nth-child(3) {
+  animation: rise 1s var(--ease-out) 0.94s both;
+}
+
+.category-card:nth-child(1) {
+  animation: rise 1s var(--ease-out) 1.05s both;
+}
+
+.category-card:nth-child(2) {
+  animation: rise 1s var(--ease-out) 1.17s both;
+}
+
+.category-card:nth-child(3) {
+  animation: rise 1s var(--ease-out) 1.29s both;
+}
+
+/* Micro-interactions */
+
+.cart-pill {
+  transition: background 0.25s ease, transform 0.25s var(--ease-out);
+}
+
+.cart-pill:hover {
+  transform: translateY(-2px);
+}
+
+.cart-pill__count {
+  transition: transform 0.3s var(--ease-spring);
+}
+
+.cart-pill:hover .cart-pill__count {
+  transform: scale(1.15);
+}
+
+.hero__cta {
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s ease, transform 0.3s var(--ease-out), box-shadow 0.3s ease;
+}
+
+.hero__cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  left: -60%;
+  transform: skewX(-20deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 253, 247, 0.55), transparent);
+  transition: left 0.6s ease;
+}
+
+.hero__cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(20, 10, 4, 0.45);
+}
+
+.hero__cta:hover::after {
+  left: 120%;
+}
+
+.hero__cta:active {
+  transform: translateY(-1px) scale(0.97);
+}
+
+.offer-card {
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.offer-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px rgba(43, 29, 18, 0.12);
+}
+
+.offer-card__icon {
+  transition: transform 0.45s var(--ease-spring);
+}
+
+.offer-card:hover .offer-card__icon {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.category-card__backdrop {
+  transition: transform 0.7s var(--ease-out);
+}
+
+.category-card:hover .category-card__backdrop {
+  transform: scale(1.06);
+}
+
+.category-card__arrow {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.category-card__cta:hover .category-card__arrow {
+  transform: translate(3px, -3px);
 }
 
 /* ---------- Showroom ---------- */
@@ -830,6 +1024,12 @@ img {
 
   .faq__intro {
     margin-bottom: 48px;
+  }
+
+  .faq__list {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    max-width: none;
   }
 }
 

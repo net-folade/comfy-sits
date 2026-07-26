@@ -80,7 +80,10 @@ export function Home() {
                   to={`/showroom?cat=${encodeURIComponent(c.cat)}`}
                   className="category-card__cta"
                 >
-                  View all products ↗
+                  View all products
+                  <span className="category-card__arrow" aria-hidden="true">
+                    ↗
+                  </span>
                 </Link>
               </div>
             </div>
