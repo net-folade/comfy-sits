@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
+import { FaqAccordion } from '../components/FaqAccordion'
 import { DeliveryIcon, ExchangeIcon, MadeToOrderIcon } from '../components/OfferIcons'
+import { directLink } from '../lib/whatsapp'
 
 const OFFERS = [
   {
@@ -78,6 +80,24 @@ export function Home() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="faq">
+        <div className="faq__inner">
+          <div className="faq__intro">
+            <h2 className="section-title">You've got questions &amp; we've got answers</h2>
+            <div className="faq__hint">Still have a question in mind?</div>
+            <a
+              href={directLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="faq__contact"
+            >
+              Contact Us ↗
+            </a>
+          </div>
+          <FaqAccordion />
         </div>
       </section>
     </main>
