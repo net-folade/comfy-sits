@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useCart } from './hooks/useCart'
+import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { ScrollToTop } from './components/ScrollToTop'
 import { Home } from './pages/Home'
@@ -42,6 +43,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/showroom" element={<Showroom />} />
       </Routes>
+      <Footer onOpenCart={openCart} />
     </BrowserRouter>
   )
 }
