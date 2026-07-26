@@ -1,5 +1,7 @@
 # ComfySits Showroom — Build Plan
 
+> **Status (2026-07-26): Parts 0–8 built and committed.** All unit tests pass; gzipped JS+CSS is 83.4 KB (budget 150 KB); production preview smoke-tested. Not yet done: push to GitHub / Vercel deploy (stop-and-confirm), and the on-device manual checks (responsive walkthrough, WhatsApp link on a real phone, corrupted-localStorage reload).
+
 ## Context
 
 ComfySits is a Ghana-based handcrafted furniture business (Accra). They need a showroom site where customers browse a catalog, build a cart, and tap **"Order on WhatsApp"** — which opens WhatsApp pre-filled with their cart contents. **No payments happen on-site**; the order is finalised in the WhatsApp conversation.
