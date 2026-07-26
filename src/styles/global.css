@@ -1,0 +1,90 @@
+/* ComfySits — design tokens + mobile-first base.
+   Base styles are the phone layout; wider layouts live in
+   min-width media queries (640px tablet, 1024px desktop). */
+
+:root {
+  --cream: #F6F1E7;
+  --cream-card: #FFFDF7;
+  --sand: #EFE7D6;
+  --sand-line: #E3D9C6;
+  --espresso: #241812;
+  --espresso-2: #3A2A1C;
+  --ink: #2B1D12;
+  --brass: #C9A45C;
+  --brass-lit: #D9B872;
+  --brass-deep: #A98547;
+  --muted: #8F7E66;
+  --muted-2: #9A8A73;
+  --wa-green: #1F8A4C;
+  --wa-green-dk: #187540;
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Karla', -apple-system, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--cream);
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--brass-deep);
+  text-decoration: none;
+}
+
+button,
+input {
+  font-family: var(--font-sans);
+}
+
+button {
+  cursor: pointer;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+::selection {
+  background: var(--brass);
+  color: var(--espresso);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
