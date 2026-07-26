@@ -5,6 +5,7 @@ import { CartDrawer } from './components/CartDrawer'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { ScrollToTop } from './components/ScrollToTop'
+import { Toast } from './components/Toast'
 import { Home } from './pages/Home'
 import { Showroom } from './pages/Showroom'
 
@@ -31,8 +32,6 @@ function App() {
     showToast(`${name} added to cart`)
   }
 
-  void toast
-
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -51,6 +50,7 @@ function App() {
         onDec={cart.dec}
         onRemove={cart.remove}
       />
+      <Toast message={toast} onViewCart={openCart} />
     </BrowserRouter>
   )
 }

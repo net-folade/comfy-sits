@@ -1094,6 +1094,47 @@ img {
   }
 }
 
+/* ---------- Toast ---------- */
+
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 80;
+  width: max-content;
+  max-width: 92vw;
+  background: var(--espresso);
+  color: var(--cream);
+  border-radius: 999px;
+  padding: 6px 6px 6px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 18px 44px rgba(20, 10, 4, 0.35);
+}
+
+.toast__text {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.toast__cta {
+  background: var(--brass);
+  color: var(--espresso);
+  border: none;
+  border-radius: 999px;
+  padding: 0 18px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+
+.toast__cta:hover {
+  background: var(--brass-lit);
+}
+
 /* ---------- Footer ---------- */
 
 .site-footer {
