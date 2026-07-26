@@ -1,32 +1,45 @@
-# React + TypeScript + Vite
+# Comfy Sits — Showroom
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Mobile-first showroom site for Comfy Sits, a handcrafted furniture business in Accra, Ghana. Customers browse the catalog, build a cart, and tap **"Send order on WhatsApp"** — the order is finalised in the WhatsApp conversation. No payments happen on-site; the site is fully static (React + Vite, no backend).
 
-Currently, two official plugins are available:
+The original design mockup lives in `design/` and is the visual reference.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Develop
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```sh
+npm install
+npm run dev       # local dev server
+npm test          # unit tests (formatter, cart message, decrement)
+npm run build     # type-check + production build into dist/
+npm run preview   # serve the production build locally
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Editing content (no code knowledge needed beyond the file)
+
+| What | Where |
+|---|---|
+| Products (name, price, description, category) | `src/data/products.ts` |
+| FAQs | `src/data/faqs.ts` |
+| WhatsApp number | `src/config.ts` — **swap the placeholder before launch** |
+| Social links, opening hours | `src/components/Footer.tsx` |
+
+## Before launch checklist
+
+1. **WhatsApp number** — `src/config.ts` still holds the placeholder `233123456789`. Replace with the real number (country code, digits only).
+2. **Product photos** — drop `public/products/<id>.webp` files (ids from `src/data/products.ts`, target ≤60 KB each) and swap the placeholder markup in `src/components/ProductImage.tsx` for the `<img>` shown in its comment. Nothing else changes.
+3. **Logo** — the serif wordmark ships now. When a real logo exists, edit only `src/components/Wordmark.tsx`.
+4. **Social links** — real Instagram/Facebook URLs in `src/components/Footer.tsx` (currently `#`).
+5. Test the WhatsApp order link **on a real phone** — desktop `wa.me` behaves differently.
+
+## Deploy (Vercel)
+
+1. Push this repo to GitHub.
+2. Import into Vercel — the Vite preset is auto-detected (build `npm run build`, output `dist`).
+3. `vercel.json` already contains the SPA rewrite so `/showroom` deep links work.
+4. Point the customer's domain at Vercel (Vercel dashboard → Domains → follow the DNS instructions).
+
+## Notes
+
+- The newsletter input from the mockup was intentionally dropped — it would need a backend or a form service (e.g. Formspree) to be real.
+- Cart persists in `localStorage` under `comfysits-cart`; a corrupted value falls back to an empty cart.
+- Out of scope by request: payments, accounts, order history, inventory, admin CMS.
