@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useCart } from './hooks/useCart'
 import { CartDrawer } from './components/CartDrawer'
+import { FloatingWhatsApp } from './components/FloatingWhatsApp'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { ScrollToTop } from './components/ScrollToTop'
@@ -51,6 +52,7 @@ function App() {
         onRemove={cart.remove}
       />
       <Toast message={toast} onViewCart={openCart} />
+      <FloatingWhatsApp hidden={drawerOpen || toast !== ''} />
     </BrowserRouter>
   )
 }
