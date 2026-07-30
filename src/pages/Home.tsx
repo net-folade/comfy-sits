@@ -2,7 +2,12 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FaqAccordion } from '../components/FaqAccordion'
 import { DeliveryIcon, ExchangeIcon, MadeToOrderIcon } from '../components/OfferIcons'
+import { ProductCard } from '../components/ProductCard'
+import { PRODUCTS } from '../data/products'
 import { directLink } from '../lib/whatsapp'
+
+// The latest drop — edit this list to feature different pieces.
+const LATEST_DROP = PRODUCTS.slice(0, 6)
 
 const OFFERS = [
   {
@@ -28,7 +33,11 @@ const HOME_CATEGORIES = [
   { label: 'Dining Sets', cat: 'Dining Sets', className: '' },
 ]
 
-export function Home() {
+interface HomeProps {
+  onAdd: (id: string, name: string) => void
+}
+
+export function Home({ onAdd }: HomeProps) {
   useEffect(() => {
     document.title = 'Comfy Sits — Handcrafted Furniture in Accra'
   }, [])
@@ -39,15 +48,24 @@ export function Home() {
         <div className="hero__backdrop" aria-hidden="true" />
         <div className="hero__scrim" aria-hidden="true" />
         <div className="hero__content">
-          <div className="hero__eyebrow">COMFY SITS · HANDCRAFTED FURNITURE</div>
+          <div className="hero__eyebrow">COMFY SITS · IMPORTED AND HANDCRAFTED FURNITURE</div>
           <h1 className="hero__title">Elevate your space, elevate your life.</h1>
           <p className="hero__lead">
-            Chairs, tables and dining sets in rich dark woods with brass detailing — built by hand
-            to make home feel like home.
+            Chairs, tables and dining sets in rich dark woods to make home feel like home.
           </p>
           <Link to="/showroom" className="hero__cta">
             Shop Now
           </Link>
+        </div>
+      </section>
+
+      <section className="new-collections">
+        <h2 className="section-title">Our New Collections</h2>
+        <p className="section-lead">The latest drop — fresh from our Accra workshop.</p>
+        <div className="product-grid">
+          {LATEST_DROP.map((p) => (
+            <ProductCard key={p.id} product={p} onAdd={onAdd} />
+          ))}
         </div>
       </section>
 
@@ -106,6 +124,25 @@ export function Home() {
             </a>
           </div>
           <FaqAccordion />
+        </div>
+      </section>
+
+      <section className="showcase">
+        <div className="showcase__panel">
+          <div className="showcase__backdrop" aria-hidden="true" />
+          <div className="showcase__scrim" aria-hidden="true" />
+          <div className="showcase__content">
+            <h2 className="showcase__title">
+              Build your home with a comfortable room by using our interior
+            </h2>
+            <p className="showcase__lead">
+              Looking for quality design furniture? You're in the right place — handcrafted
+              pieces ready to be delivered to you.
+            </p>
+            <Link to="/showroom" className="showcase__cta">
+              Shop Now
+            </Link>
+          </div>
         </div>
       </section>
     </main>

@@ -7,6 +7,7 @@ import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { ScrollToTop } from './components/ScrollToTop'
 import { Toast } from './components/Toast'
+import { About } from './pages/About'
 import { Home } from './pages/Home'
 import { Showroom } from './pages/Showroom'
 
@@ -38,8 +39,9 @@ function App() {
       <ScrollToTop />
       <Header count={cart.count} onOpenCart={openCart} />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home onAdd={addToCart} />} />
         <Route path="/showroom" element={<Showroom onAdd={addToCart} />} />
+        <Route path="/about" element={<About />} />
       </Routes>
       <Footer onOpenCart={openCart} />
       <CartDrawer

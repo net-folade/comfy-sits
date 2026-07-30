@@ -8,7 +8,7 @@ interface FooterProps {
 
 export function Footer({ onOpenCart }: FooterProps) {
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" id="contact">
       <div className="site-footer__grid">
         <div className="site-footer__col site-footer__col--brand">
           <Wordmark className="wordmark--footer" />
@@ -39,26 +39,27 @@ export function Footer({ onOpenCart }: FooterProps) {
           >
             WhatsApp us
           </a>
-          <div className="site-footer__hours">
-            Showroom by appointment
-            <br />
-            Mon – Sat · 9:00am – 6:00pm
-          </div>
+          {/* Placeholder href — swap for the real TikTok profile before launch */}
+          <a href="#" className="site-footer__link">
+            Check our TikTok
+          </a>
         </div>
       </div>
       <div className="site-footer__bottom">
         <div className="site-footer__bottom-inner">
           <div className="site-footer__copyright">© 2026 Comfy Sits · Accra, Ghana</div>
           <div className="site-footer__socials">
-            {/* Placeholder hrefs — swap for real profiles before launch */}
+            {/* Placeholder href — swap for the real TikTok profile before launch */}
             <a href="#" className="site-footer__social">
-              Instagram
+              TikTok
             </a>
-            <a href="#" className="site-footer__social">
-              Facebook
-            </a>
-            <a href="#" className="site-footer__social">
-              X / Twitter
+            <a
+              href={directLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="site-footer__social"
+            >
+              WhatsApp
             </a>
           </div>
         </div>
