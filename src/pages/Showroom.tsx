@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ProductCard } from '../components/ProductCard'
-import { CATEGORIES, PRODUCTS, type CategoryFilter } from '../data/products'
+import { CATEGORIES, PUBLISHED_PRODUCTS, categoryLabel, type CategoryFilter } from '../data/products'
 
 interface ShowroomProps {
   onAdd: (id: string, name: string) => void
@@ -18,13 +18,13 @@ export function Showroom({ onAdd }: ShowroomProps) {
   const raw = searchParams.get('cat')
   const filter: CategoryFilter = CATEGORIES.includes(raw as CategoryFilter)
     ? (raw as CategoryFilter)
-    : 'All'
+    : 'all'
 
   const pick = (c: CategoryFilter) => {
-    setSearchParams(c === 'All' ? {} : { cat: c })
+    setSearchParams(c === 'all' ? {} : { cat: c })
   }
 
-  const shown = filter === 'All' ? PRODUCTS : PRODUCTS.filter((p) => p.cat === filter)
+  const shown = filter === 'all' ? PUBLISHED_PRODUCTS : PUBLISHED_PRODUCTS.filter((p) => p.cat === filter)
 
   return (
     <main className="showroom">
@@ -50,7 +50,7 @@ export function Showroom({ onAdd }: ShowroomProps) {
             aria-pressed={filter === c}
             onClick={() => pick(c)}
           >
-            {c}
+            {categoryLabel(c)}
           </button>
         ))}
       </div>
@@ -60,6 +60,7 @@ export function Showroom({ onAdd }: ShowroomProps) {
           <ProductCard key={p.id} product={p} onAdd={onAdd} />
         ))}
       </div>
+      {shown.length === 0 && <p className="showroom__empty">No published pieces are available in this category yet.</p>}
     </main>
   )
 }

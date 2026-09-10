@@ -12,8 +12,9 @@ interface FloatingWhatsAppProps {
 // button is what actually opens WhatsApp.
 export function FloatingWhatsApp({ hidden }: FloatingWhatsAppProps) {
   const [open, setOpen] = useState(false)
+  const whatsappUrl = directLink()
 
-  if (hidden) return null
+  if (hidden || !whatsappUrl) return null
 
   return (
     <div className="floating-wa-wrap">
@@ -24,7 +25,7 @@ export function FloatingWhatsApp({ hidden }: FloatingWhatsAppProps) {
             Comfy Sits — chat with us on WhatsApp. We usually reply within minutes.
           </div>
           <a
-            href={directLink()}
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="wa-popup__cta"

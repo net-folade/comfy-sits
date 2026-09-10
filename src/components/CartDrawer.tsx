@@ -77,6 +77,7 @@ export function CartDrawer({ open, cart, subtotal, onClose, onInc, onDec, onRemo
       return p ? { ...p, qty } : null
     })
     .filter((x): x is NonNullable<typeof x> => x !== null)
+  const checkoutUrl = cartLink(cart)
 
   const browseShowroom = () => {
     onClose()
@@ -112,7 +113,7 @@ export function CartDrawer({ open, cart, subtotal, onClose, onInc, onDec, onRemo
             items.map((it) => (
               <div key={it.id} className="cart-line">
                 <div className="cart-line__thumb">
-                  <ProductImage id={it.id} name={it.name} showName={false} />
+                  <ProductImage id={it.id} name={it.name} image={it.images[0]} showName={false} sizes="64px" />
                 </div>
                 <div className="cart-line__info">
                   <div className="cart-line__name">{it.name}</div>
@@ -130,7 +131,7 @@ export function CartDrawer({ open, cart, subtotal, onClose, onInc, onDec, onRemo
                   >
                     −
                   </button>
-                  <div className="cart-line__qty">{it.qty}</div>
+                  <output className="cart-line__qty" aria-live="polite" aria-label={`${it.name} quantity`}>{it.qty}</output>
                   <button
                     type="button"
                     className="cart-line__step"
@@ -150,15 +151,15 @@ export function CartDrawer({ open, cart, subtotal, onClose, onInc, onDec, onRemo
               <div className="cart-drawer__subtotal-label">SUBTOTAL</div>
               <div className="cart-drawer__subtotal">{cedi(subtotal)}</div>
             </div>
-            <a
-              href={cartLink(cart)}
+            {checkoutUrl ? <a
+              href={checkoutUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="cart-drawer__send"
             >
               <WhatsAppIcon size={19} />
               Send order on WhatsApp
-            </a>
+            </a> : <p className="cart-drawer__unavailable">WhatsApp ordering will be available once the business number is confirmed.</p>}
             <div className="cart-drawer__reassurance">
               Opens WhatsApp with your cart pre-filled — you confirm everything with us before
               paying.

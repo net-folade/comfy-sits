@@ -7,9 +7,10 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "jsx": "react-jsx",
     "types": ["node"],
     "rootDir": ".",
     "outDir": ".test-dist"
   },
-  "include": ["src/config.ts", "src/data", "src/lib", "tests"]
+  "include": ["src/config.ts", "src/data", "src/lib", "src/hooks/useCart.ts", "src/components", "src/pages", "tests"]
 }

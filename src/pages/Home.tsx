@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom'
 import { FaqAccordion } from '../components/FaqAccordion'
 import { DeliveryIcon, ExchangeIcon, MadeToOrderIcon } from '../components/OfferIcons'
 import { ProductCard } from '../components/ProductCard'
-import { PRODUCTS } from '../data/products'
+import { PUBLISHED_PRODUCTS } from '../data/products'
 import { directLink } from '../lib/whatsapp'
 
 // The latest drop — edit this list to feature different pieces.
-const LATEST_DROP = PRODUCTS.slice(0, 6)
+const LATEST_DROP = PUBLISHED_PRODUCTS.slice(0, 6)
 
 const OFFERS = [
   {
-    title: 'Made to order',
-    blurb: 'Every piece is built for you in our Accra workshop.',
+    title: 'Delivery before payment',
+    blurb: 'Receive your furniture first, then complete payment after delivery.',
     icon: <MadeToOrderIcon />,
   },
   {
@@ -28,9 +28,9 @@ const OFFERS = [
 ]
 
 const HOME_CATEGORIES = [
-  { label: 'Chairs', cat: 'Chairs', className: 'category-card--tall' },
-  { label: 'Tables', cat: 'Tables', className: '' },
-  { label: 'Dining Sets', cat: 'Dining Sets', className: '' },
+  { label: 'sofa sets', cat: 'sofa sets', className: 'category-card--tall' },
+  { label: 'tables', cat: 'center tables', className: '' },
+  { label: 'dining sets', cat: 'dining sets', className: '' },
 ]
 
 interface HomeProps {
@@ -38,6 +38,7 @@ interface HomeProps {
 }
 
 export function Home({ onAdd }: HomeProps) {
+  const whatsappUrl = directLink()
   useEffect(() => {
     document.title = 'Comfy Sits — Handcrafted Furniture in Accra'
   }, [])
@@ -45,13 +46,16 @@ export function Home({ onAdd }: HomeProps) {
   return (
     <main>
       <section className="hero">
-        <div className="hero__backdrop" aria-hidden="true" />
+        <picture className="hero__backdrop" aria-hidden="true">
+          <source media="(max-width: 767px)" srcSet="/hero-bg-768.jpg" />
+          <img src="/hero-bg-1600.jpg" alt="" width="1600" height="1023" fetchPriority="high" />
+        </picture>
         <div className="hero__scrim" aria-hidden="true" />
         <div className="hero__content">
           <div className="hero__eyebrow">COMFY SITS · IMPORTED AND HANDCRAFTED FURNITURE</div>
           <h1 className="hero__title">Elevate your space, elevate your life.</h1>
           <p className="hero__lead">
-            Chairs, tables and dining sets in rich dark woods to make home feel like home.
+            Sofa sets, tables and dining sets in rich dark woods to make home feel like home.
           </p>
           <Link to="/showroom" className="hero__cta">
             Shop Now
@@ -114,14 +118,14 @@ export function Home({ onAdd }: HomeProps) {
           <div className="faq__intro">
             <h2 className="section-title">You've got questions &amp; we've got answers</h2>
             <div className="faq__hint">Still have a question in mind?</div>
-            <a
-              href={directLink()}
+            {whatsappUrl && <a
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="faq__contact"
             >
               Contact Us ↗
-            </a>
+            </a>}
           </div>
           <FaqAccordion />
         </div>
@@ -129,7 +133,10 @@ export function Home({ onAdd }: HomeProps) {
 
       <section className="showcase">
         <div className="showcase__panel">
-          <div className="showcase__backdrop" aria-hidden="true" />
+          <picture className="showcase__backdrop" aria-hidden="true">
+            <source media="(max-width: 767px)" srcSet="/showcase-768.jpg" />
+            <img src="/showcase-1600.jpg" alt="" width="1600" height="1200" loading="lazy" decoding="async" />
+          </picture>
           <div className="showcase__scrim" aria-hidden="true" />
           <div className="showcase__content">
             <h2 className="showcase__title">

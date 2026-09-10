@@ -4,6 +4,8 @@ import { directLink } from '../lib/whatsapp'
 import { TikTokIcon } from './TikTokIcon'
 import { WhatsAppIcon } from './WhatsAppIcon'
 import { Wordmark } from './Wordmark'
+import { InstagramIcon } from './InstagramIcon'
+import { BUSINESS, optionalUrl } from '../config'
 
 interface HeaderProps {
   count: number
@@ -30,6 +32,9 @@ export function Header({ count, onOpenCart }: HeaderProps) {
   // Transparent only while sitting on top of the home hero — everywhere
   // else the text would land on cream backgrounds and disappear.
   const solid = scrolled || pathname !== '/'
+  const whatsappUrl = directLink()
+  const tiktokUrl = optionalUrl(BUSINESS.tiktokUrl)
+  const instagramUrl = optionalUrl(BUSINESS.instagramUrl)
 
   return (
     <header className={`site-header${solid ? ' site-header--solid' : ''}`}>
@@ -52,12 +57,10 @@ export function Header({ count, onOpenCart }: HeaderProps) {
           </a>
         </nav>
         <div className="site-header__actions">
-          {/* Placeholder href — swap for the real TikTok profile before launch */}
-          <a href="#" className="header-icon" aria-label="Comfy Sits on TikTok" title="TikTok">
-            <TikTokIcon size={19} />
-          </a>
-          <a
-            href={directLink()}
+          {tiktokUrl && <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="header-icon" aria-label="Comfy Sits on TikTok" title="TikTok"><TikTokIcon size={19} /></a>}
+          {instagramUrl && <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="header-icon" aria-label="Comfy Sits on Instagram" title="Instagram"><InstagramIcon size={19} /></a>}
+          {whatsappUrl && <a
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="header-icon"
@@ -65,7 +68,7 @@ export function Header({ count, onOpenCart }: HeaderProps) {
             title="WhatsApp"
           >
             <WhatsAppIcon size={21} />
-          </a>
+          </a>}
           <button
             type="button"
             className="cart-pill"

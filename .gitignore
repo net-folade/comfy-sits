@@ -14,6 +14,8 @@ dist-ssr
 *.local
 .vercel
 BUILD_PLAN.md
+AGENTS.md
+MVP_LAUNCH_NOTES.txt
 
 # Editor directories and files
 .vscode/*
