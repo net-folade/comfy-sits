@@ -9,11 +9,18 @@ import { DOCUMENTED_WHATSAPP_PLACEHOLDER, isValidWhatsAppNumber, optionalUrl } f
 import { loadStoredCart, type CartStorage } from '../src/hooks/useCart'
 import { productMetadata } from '../src/lib/metadata'
 import { galleryIndex } from '../src/lib/gallery'
+import { canUseHistoryBack } from '../src/lib/navigation'
 
 test('cedi formats with GH₵ prefix and thousands separators', () => {
   assert.equal(cedi(620), 'GH₵ 620')
   assert.equal(cedi(1240), 'GH₵ 1,240')
   assert.equal(cedi(11500), 'GH₵ 11,500')
+})
+
+test('back navigation only uses an existing in-app history entry', () => {
+  assert.equal(canUseHistoryBack({ idx: 2 }), true)
+  assert.equal(canUseHistoryBack({ idx: 0 }), false)
+  assert.equal(canUseHistoryBack(null), false)
 })
 
 test('buildCartMessage matches the design template', () => {
@@ -69,10 +76,26 @@ test('decItem removes the item when qty reaches zero', () => {
   assert.deepEqual(decItem({ 'osu-dining-chair': 3 }, 'osu-dining-chair'), { 'osu-dining-chair': 2 })
 })
 
-test('the customer-visible catalog contains one published product per category', () => {
-  assert.equal(PUBLISHED_PRODUCTS.length, 3)
-  assert.deepEqual(new Set(PUBLISHED_PRODUCTS.map((product) => product.cat)), new Set(['sofa sets', 'center tables', 'dining sets']))
+test('the customer-visible catalog contains the expanded published collection', () => {
+  assert.equal(PUBLISHED_PRODUCTS.length, 12)
+  assert.deepEqual(
+    new Set(PUBLISHED_PRODUCTS.map((product) => product.cat)),
+    new Set(['sofa sets', 'center tables', 'dining sets', 'tv consoles'])
+  )
   assert.ok(PUBLISHED_PRODUCTS.every((product) => product.published))
+})
+
+test('pending prices are deferred to WhatsApp confirmation', () => {
+  const cart = { 'sienna-recliner-suite': 1, 'osu-dining-chair': 2 }
+  assert.equal(cartSubtotal(cart), 1240)
+  assert.equal(
+    buildCartMessage(cart),
+    "Hello Comfy Sits! I'd like to order:\n" +
+      '• 1× Sienna Recliner Set — price to be confirmed\n' +
+      '• 2× Osu Dining Chair — GH₵ 1,240\n\n' +
+      'Subtotal: to be confirmed\n\n' +
+      'Name:\nDelivery location:'
+  )
 })
 
 test('published lookup hides unpublished and unknown products', () => {

@@ -78,6 +78,7 @@ export function CartDrawer({ open, cart, subtotal, onClose, onInc, onDec, onRemo
     })
     .filter((x): x is NonNullable<typeof x> => x !== null)
   const checkoutUrl = cartLink(cart)
+  const hasPendingPrice = items.some((item) => item.pricePending)
 
   const browseShowroom = () => {
     onClose()
@@ -117,7 +118,9 @@ export function CartDrawer({ open, cart, subtotal, onClose, onInc, onDec, onRemo
                 </div>
                 <div className="cart-line__info">
                   <div className="cart-line__name">{it.name}</div>
-                  <div className="cart-line__price">{cedi(it.price)} each</div>
+                  <div className="cart-line__price">
+                    {it.pricePending ? 'price confirmed on WhatsApp' : `${cedi(it.price)} each`}
+                  </div>
                   <button type="button" className="cart-line__remove" onClick={() => onRemove(it.id)}>
                     Remove
                   </button>
@@ -149,7 +152,9 @@ export function CartDrawer({ open, cart, subtotal, onClose, onInc, onDec, onRemo
           <div className="cart-drawer__foot">
             <div className="cart-drawer__subtotal-row">
               <div className="cart-drawer__subtotal-label">SUBTOTAL</div>
-              <div className="cart-drawer__subtotal">{cedi(subtotal)}</div>
+              <div className="cart-drawer__subtotal">
+                {hasPendingPrice ? 'confirmed on WhatsApp' : cedi(subtotal)}
+              </div>
             </div>
             {checkoutUrl ? <a
               href={checkoutUrl}

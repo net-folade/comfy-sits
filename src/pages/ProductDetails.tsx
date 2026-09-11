@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { BackButton } from '../components/BackButton'
 import { ProductGallery } from '../components/ProductGallery'
 import { categoryLabel, findPublishedProduct } from '../data/products'
 import { cedi } from '../lib/format'
@@ -31,13 +32,15 @@ export function ProductDetails({ onAdd }: ProductDetailsProps) {
 
   return (
     <main className="product-detail">
-      <Link to="/showroom" className="back-link">← Back to showroom</Link>
+      <BackButton fallbackTo="/showroom" />
       <div className="product-detail__layout">
         <ProductGallery product={product} />
         <section className="product-detail__info">
           <p className="product-detail__eyebrow">{categoryLabel(product.cat)}</p>
           <h1>{product.name}</h1>
-          <p className="product-detail__price">{cedi(product.price)}</p>
+          <p className="product-detail__price">
+            {product.pricePending ? 'price coming soon' : cedi(product.price)}
+          </p>
           <p className="product-detail__desc">{product.desc}</p>
           {product.includes && <p className="product-detail__includes"><strong>This set includes:</strong> {product.includes}</p>}
           <dl className="product-detail__specs">

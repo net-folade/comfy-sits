@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
+import { BackButton } from '../components/BackButton'
 import { ProductCard } from '../components/ProductCard'
 import { CATEGORIES, PUBLISHED_PRODUCTS, categoryLabel, type CategoryFilter } from '../data/products'
 
@@ -8,8 +9,6 @@ interface ShowroomProps {
 }
 
 export function Showroom({ onAdd }: ShowroomProps) {
-  const navigate = useNavigate()
-
   useEffect(() => {
     document.title = 'The Showroom — Comfy Sits'
   }, [])
@@ -28,9 +27,7 @@ export function Showroom({ onAdd }: ShowroomProps) {
 
   return (
     <main className="showroom">
-      <button type="button" className="back-link" onClick={() => navigate(-1)}>
-        ← Back
-      </button>
+      <BackButton fallbackTo="/" />
       <div className="showroom__head">
         <div>
           <div className="showroom__eyebrow">THE SHOWROOM</div>

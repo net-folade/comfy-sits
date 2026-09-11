@@ -5,6 +5,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { ProductGallery } from '../src/components/ProductGallery'
 import { ProductDetails } from '../src/pages/ProductDetails'
 import { Showroom } from '../src/pages/Showroom'
+import { Home } from '../src/pages/Home'
 import { NotFound } from '../src/pages/NotFound'
 import type { Product } from '../src/data/products'
 
@@ -22,11 +23,26 @@ test('category query selection renders only its published product', () => {
   assert.match(html, /aria-pressed="true"[^>]*>tables/)
 })
 
+test('home renders exactly three products in the latest drop', () => {
+  const html = renderRoute('/', <Home onAdd={() => undefined} />)
+  assert.equal((html.match(/class="product-card"/g) ?? []).length, 3)
+})
+
+test('home marks the faq and showcase content for scroll reveals', () => {
+  const html = renderRoute('/', <Home onAdd={() => undefined} />)
+  assert.equal((html.match(/data-home-reveal=""/g) ?? []).length, 8)
+})
+
 test('published product route renders details and add action', () => {
   const html = renderRoute('/products/tema-compact', <ProductDetails onAdd={() => undefined} />, '/products/:productId')
   assert.match(html, /Tema Compact Set/)
   assert.match(html, /This set includes:/)
   assert.match(html, /Add to cart/)
+})
+
+test('product details renders a history-aware back button', () => {
+  const html = renderRoute('/products/amber-dining-set', <ProductDetails onAdd={() => undefined} />, '/products/:productId')
+  assert.match(html, /<button[^>]*class="back-link"[^>]*>← Back<\/button>/)
 })
 
 test('unpublished product route renders the unavailable state', () => {

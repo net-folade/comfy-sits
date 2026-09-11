@@ -1,11 +1,15 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigationType } from 'react-router-dom'
 
-// The design's go() scrolled to top on every screen change; do the same per route.
 export function ScrollToTop() {
   const { pathname } = useLocation()
+  const navigationType = useNavigationType()
+
   useEffect(() => {
+    // Let the browser restore the previous scroll position for Back/Forward.
+    if (navigationType === 'POP') return
     window.scrollTo({ top: 0 })
-  }, [pathname])
+  }, [navigationType, pathname])
+
   return null
 }

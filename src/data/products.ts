@@ -1,7 +1,13 @@
 // Edit this file to change the catalog — components render whatever is here.
 // Product photos live under public/products/<id>/ and are referenced below.
 
-export type Category = 'sofa sets' | 'center tables' | 'dining sets'
+export type Category =
+  | 'sofa sets'
+  | 'l-shapes'
+  | 'office sets'
+  | 'tv consoles'
+  | 'center tables'
+  | 'dining sets'
 
 export interface ProductImageData {
   src: string
@@ -22,6 +28,7 @@ export interface Product {
   name: string
   cat: Category
   price: number
+  pricePending?: boolean
   desc: string
   images: ProductImageData[]
   includes?: string
@@ -33,6 +40,123 @@ export interface Product {
 }
 
 export const PRODUCTS: Product[] = [
+  {
+    id: 'sienna-recliner-suite',
+    name: 'Sienna Recliner Set',
+    cat: 'sofa sets',
+    price: 0,
+    pricePending: true,
+    desc: 'Cocoa-toned recliner set with quilted panels and stud detailing',
+    includes: '1 three-seater, 1 two-seater and 2 armchairs',
+    materials: 'Leather-look upholstery with metal stud accents',
+    images: [
+      { src: '/products/sienna-recliner-suite/full-set.webp', alt: 'Complete Sienna recliner set in cocoa brown', width: 1280, height: 960 },
+      { src: '/products/sienna-recliner-suite/armchair.webp', alt: 'Sienna recliner armchair front view', width: 1280, height: 960 },
+      { src: '/products/sienna-recliner-suite/three-seater.webp', alt: 'Sienna three-seater recliner sofa front view', width: 1280, height: 960 },
+      { src: '/products/sienna-recliner-suite/two-seater.webp', alt: 'Sienna two-seater recliner sofa front view', width: 1280, height: 960 },
+    ],
+    available: true,
+    published: true,
+  },
+  {
+    id: 'halo-dressing-table',
+    name: 'Halo Dressing Table',
+    cat: 'center tables',
+    price: 0,
+    pricePending: true,
+    desc: 'Soft-curved dressing table with an illuminated mirror and generous storage',
+    includes: '1 dressing table, 1 illuminated mirror and 1 stool',
+    images: [
+      { src: '/products/halo-dressing-table/front.webp', alt: 'Halo dressing table with illuminated mirror and stool', width: 1280, height: 960 },
+      { src: '/products/halo-dressing-table/storage.webp', alt: 'Halo dressing table with its compartment drawer open', width: 1280, height: 960 },
+    ],
+    available: true,
+    published: true,
+  },
+  {
+    id: 'aria-tv-console',
+    name: 'Aria TV Console',
+    cat: 'tv consoles',
+    price: 0,
+    pricePending: true,
+    desc: 'Layered black console with gold-tone rails and crisp white drawers',
+    includes: '1 upper console and 1 lower display unit',
+    images: [{ src: '/products/aria-tv-console/front.webp', alt: 'Aria black and gold TV console with twin white drawers', width: 1280, height: 960 }],
+    available: true,
+    published: true,
+  },
+  {
+    id: 'luna-bistro-set',
+    name: 'Luna Set',
+    cat: 'dining sets',
+    price: 0,
+    pricePending: true,
+    desc: 'A compact round table paired with two sculpted wraparound chairs',
+    includes: '1 round table and 2 dining chairs',
+    images: [{ src: '/products/luna-bistro-set/set.webp', alt: 'Luna set with round marble-effect table and two chairs', width: 1280, height: 960 }],
+    available: true,
+    published: true,
+  },
+  {
+    id: 'heritage-dining-set',
+    name: 'Heritage Dining Set',
+    cat: 'dining sets',
+    price: 0,
+    pricePending: true,
+    desc: 'A warm wood dining set with carved lattice details and patterned seats',
+    includes: '1 rectangular table and 6 dining chairs',
+    images: [{ src: '/products/heritage-dining-set/set.webp', alt: 'Heritage wood dining table with six patterned chairs', width: 1280, height: 960 }],
+    available: true,
+    published: true,
+  },
+  {
+    id: 'aurelia-dining-set',
+    name: 'Aurelia Dining Set',
+    cat: 'dining sets',
+    price: 0,
+    pricePending: true,
+    desc: 'A luminous gold-tone dining set with a marble-effect top and black seats',
+    includes: '1 rectangular table and 6 dining chairs',
+    images: [{ src: '/products/aurelia-dining-set/set.webp', alt: 'Aurelia gold-tone dining table with six black chairs', width: 1280, height: 960 }],
+    available: true,
+    published: true,
+  },
+  {
+    id: 'noir-dining-set',
+    name: 'Noir Dining Set',
+    cat: 'dining sets',
+    price: 0,
+    pricePending: true,
+    desc: 'Bold black marble-effect dining set framed in polished silver tones',
+    includes: '1 rectangular table and 6 dining chairs',
+    images: [{ src: '/products/noir-dining-set/set.webp', alt: 'Noir black dining table with six silver-tone chairs', width: 1280, height: 960 }],
+    available: true,
+    published: true,
+  },
+  {
+    id: 'amber-dining-set',
+    name: 'Amber Dining Set',
+    cat: 'dining sets',
+    price: 0,
+    pricePending: true,
+    desc: 'A softly rounded dining set with amber seats and a sculptural gold-tone base',
+    includes: '1 rectangular table and 6 dining chairs',
+    images: [{ src: '/products/amber-dining-set/set.webp', alt: 'Amber dining table with six warm brown quilted chairs', width: 1280, height: 960 }],
+    available: true,
+    published: true,
+  },
+  {
+    id: 'pearl-dining-set',
+    name: 'Pearl Dining Set',
+    cat: 'dining sets',
+    price: 0,
+    pricePending: true,
+    desc: 'Bright marble-effect dining set with a polished frame and cream seats',
+    includes: '1 rectangular table and 6 dining chairs',
+    images: [{ src: '/products/pearl-dining-set/set.webp', alt: 'Pearl white dining table with six cream chairs', width: 1280, height: 960 }],
+    available: true,
+    published: true,
+  },
   { id: 'accra-lounge', name: 'Accra Lounge Chair', cat: 'sofa sets', price: 1450, desc: 'Solid teak frame with a woven cane back', images: [], available: false, published: false },
   { id: 'adjoa-armchair', name: 'Adjoa Armchair', cat: 'sofa sets', price: 1880, desc: 'Deep-seat comfort in ivory bouclé', images: [], available: false, published: false },
   { id: 'osu-dining-chair', name: 'Osu Dining Chair', cat: 'sofa sets', price: 620, desc: 'Sculpted mahogany, brass-capped legs', materials: 'Mahogany with brass-capped legs', images: [{ src: '/products/osu-dining-chair/chair-front.webp', alt: 'Osu dining chair' }], available: true, published: true },
@@ -52,7 +176,15 @@ export const PUBLISHED_PRODUCTS = PRODUCTS.filter((product) => product.published
 export const findPublishedProduct = (id: string): Product | undefined =>
   PUBLISHED_PRODUCTS.find((product) => product.id === id)
 
-export const CATEGORIES = ['all', 'sofa sets', 'center tables', 'dining sets'] as const
+export const CATEGORIES = [
+  'all',
+  'sofa sets',
+  'l-shapes',
+  'office sets',
+  'tv consoles',
+  'center tables',
+  'dining sets',
+] as const
 export type CategoryFilter = (typeof CATEGORIES)[number]
 
 export const categoryLabel = (category: CategoryFilter): string =>

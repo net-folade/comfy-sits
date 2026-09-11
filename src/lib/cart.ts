@@ -50,5 +50,5 @@ export const cartCount = (cart: Cart): number =>
 export const cartSubtotal = (cart: Cart): number =>
   cartEntries(cart).reduce((a, [id, q]) => {
     const p = PUBLISHED_PRODUCTS.find((x) => x.id === id)
-    return a + (p ? p.price * q : 0)
+    return a + (p && !p.pricePending ? p.price * q : 0)
   }, 0)

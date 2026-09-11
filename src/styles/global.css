@@ -468,6 +468,12 @@ img {
   text-align: left;
 }
 
+@media (max-width: 767px) {
+  .new-collections .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (min-width: 768px) {
   .new-collections .product-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -612,7 +618,7 @@ img {
 .category-card {
   position: relative;
   min-width: 0;
-  height: 180px;
+  height: 220px;
   border-radius: 18px;
   overflow: hidden;
 }
@@ -622,6 +628,22 @@ img {
   position: absolute;
   inset: 0;
   background: linear-gradient(140deg, var(--espresso-2) 0%, var(--brass-deep) 120%);
+  background-position: center;
+  background-size: cover;
+}
+
+@media (max-width: 1023px) {
+  .category-card--fit-image .category-card__backdrop {
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .category-card {
+    height: 320px;
+  }
 }
 
 .category-card__scrim {
@@ -672,21 +694,13 @@ img {
   }
 
   .categories__grid {
-    grid-template-columns: 1.15fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: 280px 280px;
     gap: 22px;
   }
 
   .category-card {
     height: auto;
-  }
-
-  .category-card--tall {
-    grid-row: span 2;
-  }
-
-  .category-card--tall .category-card__name {
-    font-size: 32px;
   }
 
   .category-card__content {
@@ -865,6 +879,47 @@ img {
 
 .category-card__cta:hover .category-card__arrow {
   transform: translate(3px, -3px);
+}
+
+/* Lower-page reveals are progressively enhanced so content stays visible
+   when JavaScript or IntersectionObserver is unavailable. */
+.home-motion [data-home-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.home-motion [data-home-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.home-motion .faq-item:nth-child(2) {
+  --reveal-delay: 55ms;
+}
+
+.home-motion .faq-item:nth-child(3) {
+  --reveal-delay: 110ms;
+}
+
+.home-motion .faq-item:nth-child(4) {
+  --reveal-delay: 165ms;
+}
+
+.home-motion .faq-item:nth-child(5) {
+  --reveal-delay: 220ms;
+}
+
+.home-motion .faq-item:nth-child(6) {
+  --reveal-delay: 275ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-motion [data-home-reveal] {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* ---------- Showroom ---------- */
@@ -1123,6 +1178,27 @@ img.product-image {
 
 .product-image--contain {
   object-fit: contain;
+}
+
+@media (max-width: 767px) {
+  .product-card[data-product-id='halo-dressing-table'] .product-image-picture--loaded,
+  .product-card[data-product-id='halo-dressing-table'] img.product-image {
+    background: #fff;
+  }
+
+  .product-card[data-product-id='halo-dressing-table'] img.product-image {
+    object-fit: contain;
+  }
+}
+
+.new-collections .product-card[data-product-id='luna-bistro-set'] .product-image-picture--loaded,
+.new-collections .product-card[data-product-id='luna-bistro-set'] img.product-image {
+  background: #fff;
+}
+
+.new-collections .product-card[data-product-id='luna-bistro-set'] img.product-image {
+  object-fit: contain;
+  object-position: center;
 }
 
 /* ---------- Product details + gallery ---------- */
@@ -1386,11 +1462,14 @@ img.product-image {
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.04em;
+  transition: background 0.25s ease, transform 0.3s var(--ease-out), box-shadow 0.3s ease;
 }
 
 .faq__contact:hover {
   background: var(--espresso-2);
   color: var(--cream);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(43, 29, 18, 0.16);
 }
 
 .faq__list {
@@ -1406,6 +1485,20 @@ img.product-image {
   border: 1px solid var(--sand-line);
   border-radius: 14px;
   overflow: hidden;
+  transition-property: opacity, transform, border-color, box-shadow;
+  transition-duration: 0.65s, 0.65s, 0.25s, 0.25s;
+  transition-timing-function: ease, var(--ease-out), ease, ease;
+  transition-delay: var(--reveal-delay, 0ms), var(--reveal-delay, 0ms), 0ms, 0ms;
+}
+
+.faq-item:hover {
+  border-color: var(--brass);
+  box-shadow: 0 10px 24px rgba(43, 29, 18, 0.09);
+  transform: translateY(-2px);
+}
+
+.home-motion .faq-item.is-visible:hover {
+  transform: translateY(-2px);
 }
 
 .faq-item__question {
@@ -1424,10 +1517,26 @@ img.product-image {
   line-height: 1.4;
 }
 
+.faq-item__question > span:first-child {
+  transition: transform 0.3s var(--ease-out), color 0.25s ease;
+}
+
+.faq-item:hover .faq-item__question > span:first-child {
+  color: var(--brass-deep);
+  transform: translateX(3px);
+}
+
 .faq-item__chevron {
   color: var(--brass-deep);
-  font-size: 13px;
+  font-size: 20px;
+  line-height: 1;
   flex-shrink: 0;
+  transform-origin: center;
+  transition: transform 0.3s var(--ease-spring);
+}
+
+.faq-item__question[aria-expanded='true'] .faq-item__chevron {
+  transform: rotate(180deg);
 }
 
 .faq-item__answer {
@@ -1435,6 +1544,18 @@ img.product-image {
   font-size: 14.5px;
   line-height: 1.7;
   color: var(--muted);
+  animation: faq-answer-in 0.3s var(--ease-out) both;
+}
+
+@keyframes faq-answer-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (min-width: 1024px) {

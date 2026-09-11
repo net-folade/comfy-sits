@@ -10,17 +10,24 @@ export const waLink = (msg: string, number = BUSINESS.whatsappNumber): string | 
 }
 
 export const buildCartMessage = (cart: Cart): string => {
-  const lines = cartEntries(cart)
+  const entries = cartEntries(cart)
+  const hasPendingPrice = entries.some(([id]) =>
+    PUBLISHED_PRODUCTS.find((product) => product.id === id)?.pricePending
+  )
+  const lines = entries
     .map(([id, q]) => {
       const p = PUBLISHED_PRODUCTS.find((x) => x.id === id)
-      return p ? `• ${q}× ${p.name} — ${cedi(p.price * q)}` : ''
+      if (!p) return ''
+      return p.pricePending
+        ? `• ${q}× ${p.name} — price to be confirmed`
+        : `• ${q}× ${p.name} — ${cedi(p.price * q)}`
     })
     .filter(Boolean)
   return (
     "Hello Comfy Sits! I'd like to order:\n" +
     (lines.length > 0 ? lines.join('\n') + '\n' : '') +
     '\nSubtotal: ' +
-    cedi(cartSubtotal(cart)) +
+    (hasPendingPrice ? 'to be confirmed' : cedi(cartSubtotal(cart))) +
     '\n\nName:\nDelivery location:'
   )
 }

@@ -9,7 +9,7 @@ export function FaqAccordion() {
       {FAQS.map((f, i) => {
         const open = openFaq === i
         return (
-          <div key={f.q} className="faq-item">
+          <div key={f.q} className="faq-item" data-home-reveal="">
             <button
               type="button"
               className="faq-item__question"
@@ -19,7 +19,7 @@ export function FaqAccordion() {
             >
               <span>{f.q}</span>
               <span className="faq-item__chevron" aria-hidden="true">
-                {open ? '▲' : '▼'}
+                ⌄
               </span>
             </button>
             {open && (

@@ -1,9 +1,8 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { BackButton } from '../components/BackButton'
 import { directLink } from '../lib/whatsapp'
 
 export function About() {
-  const navigate = useNavigate()
   const whatsappUrl = directLink()
 
   useEffect(() => {
@@ -12,9 +11,7 @@ export function About() {
 
   return (
     <main className="about">
-      <button type="button" className="back-link" onClick={() => navigate(-1)}>
-        ← Back
-      </button>
+      <BackButton fallbackTo="/" />
       <div className="about__eyebrow">ABOUT US</div>
       <h1 className="about__title">Handcrafted in Accra</h1>
       <p className="about__body">
