@@ -10,6 +10,7 @@ import { loadStoredCart, type CartStorage } from '../src/hooks/useCart'
 import { productMetadata } from '../src/lib/metadata'
 import { galleryIndex } from '../src/lib/gallery'
 import { canUseHistoryBack } from '../src/lib/navigation'
+import { asset, setAssetBase } from '../src/lib/asset'
 
 test('cedi formats with GH₵ prefix and thousands separators', () => {
   assert.equal(cedi(620), 'GH₵ 620')
@@ -177,4 +178,14 @@ test('gallery navigation wraps in both directions', () => {
   assert.equal(galleryIndex(2, 1, 3), 0)
   assert.equal(galleryIndex(0, -1, 3), 2)
   assert.equal(galleryIndex(0, 1, 0), 0)
+})
+
+test('asset prefixes public paths with the deployed base path', () => {
+  setAssetBase('/comfy-sits/')
+  assert.equal(asset('/logo.webp'), '/comfy-sits/logo.webp')
+  assert.equal(asset('/products/aria-tv-console/front.webp'), '/comfy-sits/products/aria-tv-console/front.webp')
+  setAssetBase('/comfy-sits')
+  assert.equal(asset('/logo.webp'), '/comfy-sits/logo.webp')
+  setAssetBase('/')
+  assert.equal(asset('/logo.webp'), '/logo.webp')
 })

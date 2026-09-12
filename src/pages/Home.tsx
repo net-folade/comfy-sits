@@ -4,6 +4,7 @@ import { FaqAccordion } from '../components/FaqAccordion'
 import { DeliveryIcon, ExchangeIcon, MadeToOrderIcon } from '../components/OfferIcons'
 import { ProductCard } from '../components/ProductCard'
 import { PUBLISHED_PRODUCTS, type Category } from '../data/products'
+import { asset } from '../lib/asset'
 import { directLink } from '../lib/whatsapp'
 
 // The first image for each product is its homepage and showroom tile image.
@@ -86,8 +87,8 @@ export function Home({ onAdd }: HomeProps) {
     <main ref={homeRef}>
       <section className="hero">
         <picture className="hero__backdrop" aria-hidden="true">
-          <source media="(max-width: 767px)" srcSet="/hero-bg-768.jpg" />
-          <img src="/hero-bg-1600.jpg" alt="" width="1600" height="1023" fetchPriority="high" />
+          <source media="(max-width: 767px)" srcSet={asset('/hero-bg-768.jpg')} />
+          <img src={asset('/hero-bg-1600.jpg')} alt="" width="1600" height="1023" fetchPriority="high" />
         </picture>
         <div className="hero__scrim" aria-hidden="true" />
         <div className="hero__content">
@@ -136,7 +137,7 @@ export function Home({ onAdd }: HomeProps) {
             <div key={c.cat} className={`category-card ${c.className}`}>
               <div
                 className="category-card__backdrop"
-                style={c.image ? { backgroundImage: `url('${c.image}')` } : undefined}
+                style={c.image ? { backgroundImage: `url('${asset(c.image)}')` } : undefined}
                 aria-hidden="true"
               />
               <div className="category-card__scrim" aria-hidden="true" />
@@ -178,8 +179,8 @@ export function Home({ onAdd }: HomeProps) {
       <section className="showcase">
         <div className="showcase__panel" data-home-reveal="">
           <picture className="showcase__backdrop" aria-hidden="true">
-            <source media="(max-width: 767px)" srcSet="/showcase-768.jpg" />
-            <img src="/showcase-1600.jpg" alt="" width="1600" height="1200" loading="lazy" decoding="async" />
+            <source media="(max-width: 767px)" srcSet={asset('/showcase-768.jpg')} />
+            <img src={asset('/showcase-1600.jpg')} alt="" width="1600" height="1200" loading="lazy" decoding="async" />
           </picture>
           <div className="showcase__scrim" aria-hidden="true" />
           <div className="showcase__content">

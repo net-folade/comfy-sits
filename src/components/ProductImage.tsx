@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { ProductImageData } from '../data/products'
+import { asset } from '../lib/asset'
 import { hasProductImage, productImageAlt } from '../lib/images'
 
 interface ProductImageProps {
@@ -50,7 +51,7 @@ export function ProductImage({
         ))}
         <img
           className={`product-image product-image--${fit}`}
-          src={image.src}
+          src={asset(image.src)}
           alt={image.alt}
           width={image.width ?? 1200}
           height={image.height ?? 900}
