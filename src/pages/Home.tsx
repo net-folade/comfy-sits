@@ -67,6 +67,17 @@ export function Home({ onAdd }: HomeProps) {
     const revealItems = home.querySelectorAll<HTMLElement>('[data-home-reveal]')
     home.classList.add('home-motion')
 
+    // Items that reveal together (a card row, a heading and its lead) stagger
+    // by their position among their marked siblings.
+    const seenPerParent = new Map<Element, number>()
+    revealItems.forEach((item) => {
+      const parent = item.parentElement
+      if (!parent) return
+      const index = seenPerParent.get(parent) ?? 0
+      seenPerParent.set(parent, index + 1)
+      if (index > 0) item.style.setProperty('--reveal-delay', `${index * 55}ms`)
+    })
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return
@@ -105,24 +116,24 @@ export function Home({ onAdd }: HomeProps) {
       </section>
 
       <section className="new-collections">
-        <h2 className="section-title">Our New Collections</h2>
-        <p className="section-lead">The latest drop — fresh from our Accra workshop.</p>
+        <h2 className="section-title" data-home-reveal="">Our New Collections</h2>
+        <p className="section-lead" data-home-reveal="">The latest drop — fresh from our Accra workshop.</p>
         <div className="product-grid">
           {LATEST_DROP.map((p) => (
-            <ProductCard key={p.id} product={p} onAdd={onAdd} />
+            <ProductCard key={p.id} product={p} onAdd={onAdd} reveal />
           ))}
         </div>
       </section>
 
       <section className="offers">
-        <h2 className="section-title">What we can offer you</h2>
-        <p className="section-lead">
+        <h2 className="section-title" data-home-reveal="">What we can offer you</h2>
+        <p className="section-lead" data-home-reveal="">
           High-quality, stylish and functional furniture designed to elevate your space with
           comfort and elegance.
         </p>
         <div className="offers__grid">
           {OFFERS.map((o) => (
-            <div key={o.title} className="offer-card">
+            <div key={o.title} className="offer-card" data-home-reveal="">
               <div className="offer-card__icon">{o.icon}</div>
               <div className="offer-card__title">{o.title}</div>
               <div className="offer-card__blurb">{o.blurb}</div>
@@ -134,7 +145,7 @@ export function Home({ onAdd }: HomeProps) {
       <section className="categories">
         <div className="categories__grid">
           {HOME_CATEGORIES.map((c) => (
-            <div key={c.cat} className={`category-card ${c.className}`}>
+            <div key={c.cat} className={`category-card ${c.className}`} data-home-reveal="">
               <div
                 className="category-card__backdrop"
                 style={c.image ? { backgroundImage: `url('${asset(c.image)}')` } : undefined}

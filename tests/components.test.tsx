@@ -28,9 +28,17 @@ test('home renders exactly three products in the latest drop', () => {
   assert.equal((html.match(/class="product-card"/g) ?? []).length, 3)
 })
 
-test('home marks the faq and showcase content for scroll reveals', () => {
+test('home marks every section below the hero for scroll reveals', () => {
   const html = renderRoute('/', <Home onAdd={() => undefined} />)
-  assert.equal((html.match(/data-home-reveal=""/g) ?? []).length, 8)
+  // 5 new collections, 5 offers, 6 categories, 7 faq, 1 showcase.
+  assert.equal((html.match(/data-home-reveal=""/g) ?? []).length, 24)
+  // The hero stays on its load-time animation.
+  assert.doesNotMatch(html, /hero__title"[^>]*data-home-reveal/)
+})
+
+test('showroom product cards opt out of the home scroll reveal', () => {
+  const html = renderRoute('/showroom', <Showroom onAdd={() => undefined} />)
+  assert.doesNotMatch(html, /data-home-reveal/)
 })
 
 test('published product route renders details and add action', () => {

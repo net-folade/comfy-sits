@@ -6,11 +6,13 @@ import { ProductImage } from './ProductImage'
 interface ProductCardProps {
   product: Product
   onAdd: (id: string, name: string) => void
+  /** Opt into the home page's scroll-reveal animation. */
+  reveal?: boolean
 }
 
-export function ProductCard({ product, onAdd }: ProductCardProps) {
+export function ProductCard({ product, onAdd, reveal }: ProductCardProps) {
   return (
-    <div className="product-card" data-product-id={product.id}>
+    <div className="product-card" data-product-id={product.id} data-home-reveal={reveal ? '' : undefined}>
       <Link
         to={`/products/${product.id}`}
         className="product-card__image"
